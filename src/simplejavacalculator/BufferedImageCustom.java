@@ -6,18 +6,18 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 
 /**
- *This class will return an image
- *from a binary data.
+ * This class returns an image from binary data.
  */
 class BufferedImageCustom {
-   public Image imageReturn() 
-      throws IOException {
-      Image image;
-      
-      InputStream bis = getClass().getResourceAsStream("/resources/icon/icon.png");
-      BufferedImage bImage2 = ImageIO.read(bis);
-      image = bImage2;
-      
-      return image;
-   }       
+    private static final String ICON_PATH = "/resources/icon/icon.png";
+
+    public Image imageReturn() throws IOException {
+        try (InputStream bis = getClass().getResourceAsStream(ICON_PATH)) {
+            if (bis == null) {
+                throw new FileNotFoundException("Icon resource not found: " + ICON_PATH);
+            }
+            BufferedImage bImage = ImageIO.read(bis);
+            return bImage;
+        }
+    }
 }
